@@ -1,0 +1,11 @@
+Model Information:
+* title:	Crawler Crane XCMG XGC75
+* source:	https://sketchfab.com/3d-models/crawler-crane-xcmg-xgc75-935fab212d504279af8b63b0b6d78030
+* author:	8bit (https://sketchfab.com/8_bit)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Crawler Crane XCMG XGC75" (https://sketchfab.com/3d-models/crawler-crane-xcmg-xgc75-935fab212d504279af8b63b0b6d78030) by 8bit (https://sketchfab.com/8_bit) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
