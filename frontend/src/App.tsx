@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTelemetryStore } from './store/useTelemetryStore';
 import TelemetryChart from './components/TelemetryChart';
 import MaintenanceFeed from './components/center/MaintenanceFeed';
@@ -7,7 +7,7 @@ import DigitalTwinCanvas from './components/center/DigitalTwinCanvas';
 import { Activity, AlertTriangle, ShieldCheck, Cpu, Gauge, Thermometer, MapPin, Box } from 'lucide-react';
 
 export default function App() {
-  const { data, isConnected, connect } = useTelemetryStore();
+  const { data, isConnected, isSimulated, connect } = useTelemetryStore();
 
   useEffect(() => {
     connect();
@@ -28,12 +28,12 @@ export default function App() {
         <div className="flex items-center gap-3">
           <div className={`w-3 h-3 rounded-full ${isConnected ? 'bg-industrial-green animate-pulse' : 'bg-industrial-red'}`} />
           <h1 className="font-bold text-base tracking-wider text-industrial-yellow uppercase">
-            Aegis-HANYUN <span className="text-white text-xs font-normal opacity-70">| XCMG Industrial Cockpit</span>
+            Aegis-HANYUN <span className="text-white text-xs font-normal opacity-70">| XCMG XC968-EV Cockpit</span>
           </h1>
         </div>
         <div className="flex items-center gap-4 text-xs font-mono">
           <span className="px-3 py-1 bg-industrial-bg border border-industrial-border rounded text-industrial-cyan">
-            WS STATUS: {isConnected ? 'CONNECTED (10Hz)' : 'DISCONNECTED'}
+            WS STATUS: {isSimulated ? 'EV TELEMETRY (SIMULATED)' : isConnected ? 'CONNECTED (10Hz)' : 'CONNECTING...'}
           </span>
         </div>
       </header>

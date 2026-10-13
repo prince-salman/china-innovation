@@ -1,7 +1,6 @@
-import React from 'react';
-import { MaintenanceFeed } from './MaintenanceFeed';
+import MaintenanceFeed from './MaintenanceFeed';
 
-export const Center: React.FC = () => {
+export const Center = () => {
   return (
     <div className="w-full h-full p-4 overflow-y-auto bg-slate-950">
       {/* Komponen Incident Feed */}

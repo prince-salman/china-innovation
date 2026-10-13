@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Filter, ArrowUpDown, AlertTriangle, ShieldAlert, Wrench, CheckCircle2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Filter, ArrowUpDown, ShieldAlert, Wrench } from 'lucide-react';
 
 interface IncidentReport {
   id: string;
@@ -12,6 +12,49 @@ interface IncidentReport {
   confidence_score: number;
 }
 
+const DEFAULT_XCMG_INCIDENTS: IncidentReport[] = [
+  {
+    id: "INC-001",
+    timestamp: "2026-09-18T10:30:00Z",
+    equipment_id: "XCMG-XC968-EV",
+    title: "Inverter Phase Thermal Surge & Overcurrent",
+    severity: "CRITICAL",
+    root_cause: "Dual-Inverter SiC Module Thermal Stress & Phase Current Imbalance",
+    oem_part: "XCMG-803190112-INVERTER",
+    confidence_score: 0.96
+  },
+  {
+    id: "INC-002",
+    timestamp: "2026-09-18T11:15:00Z",
+    equipment_id: "XCMG-XE370E",
+    title: "Hydraulic Main Relief Valve Micro-leakage",
+    severity: "HIGH",
+    root_cause: "Proportional Relief Valve Seat Cavitation & Pressure Drop",
+    oem_part: "XCMG-803164921-VALVE",
+    confidence_score: 0.91
+  },
+  {
+    id: "INC-003",
+    timestamp: "2026-09-18T12:00:00Z",
+    equipment_id: "XCMG-XDR80TE",
+    title: "Battery Pack Thermal Gradient Alert",
+    severity: "MEDIUM",
+    root_cause: "Cell Module #4 Thermal Balancing Deviation (> 4.8°C)",
+    oem_part: "XCMG-803588210-BMS-MOD",
+    confidence_score: 0.85
+  },
+  {
+    id: "INC-004",
+    timestamp: "2026-09-18T12:10:00Z",
+    equipment_id: "XCMG-XC958-EV",
+    title: "Hydraulic Cylinder Wiper Seal Wear",
+    severity: "LOW",
+    root_cause: "Dust Ingress & Wiper Packing Degradation",
+    oem_part: "XCMG-803172044-SEAL",
+    confidence_score: 0.79
+  }
+];
+
 export default function MaintenanceFeed() {
   const [incidents, setIncidents] = useState<IncidentReport[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -19,14 +62,19 @@ export default function MaintenanceFeed() {
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'confidence'>('newest');
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/incidents')
-      .then((res) => res.json())
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    fetch(`${apiUrl}/api/incidents`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+        return res.json();
+      })
       .then((data) => {
         setIncidents(data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Error fetching incidents:', err);
+        console.warn('API unavailable, using XCMG fallback incident feed:', err);
+        setIncidents(DEFAULT_XCMG_INCIDENTS);
         setLoading(false);
       });
   }, []);
